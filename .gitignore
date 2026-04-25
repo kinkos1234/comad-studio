@@ -1,0 +1,23 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Backups created by install.sh
+*.bak-*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Skill runtime artifacts (per-user, not part of distribution)
+images/
+videos/
+slides/
+infographics/
+prototypes/
+.jobs/

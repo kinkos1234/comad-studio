@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "10s-skill-intro",
+    "prompt": "comad-motion 스킬 소개하는 10초 영상 만들어줘",
+    "expected": "Stage duration=10, Sprite 3-5개 나누기 (Hook→Setup→Build→Climax→Rest), expoOut 메인 easing, SFX P0 (logo reveal + 포커스 전환 2회) + BGM tech 계열, 최종 MP4 + audio stream 존재",
+    "tests": [
+      "animations.js 의 Stage+Sprite+expoOut 사용",
+      "lowpass 4000 BGM / highpass 800 SFX 주파수 분리 적용",
+      "window.__ready 플래그 세팅",
+      "ffprobe audio stream 존재",
+      "콘솔 에러 0",
+      "파일 크기 < 5MB"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "30s-weekly-retro",
+    "prompt": "이번 주 코마드 활동 회고 30초 영상, 커밋 수·스킬 추가·feedback 승격 수치를 애니메이션으로",
+    "expected": "Stage duration=30, 5단 서사 (도입 2s + 3개 수치 block 6s 씩 + 마무리 4s), 각 수치 expoOut 으로 튀어나옴, overshoot 으로 마지막 수치 강조, BGM educational, SFX 4개/10s 밀도 (tick + impact + focus + logo)",
+    "tests": [
+      "3개 수치 interpolate 애니메이션",
+      "Sprite cross-fade 적용 (>=1초 겹침)",
+      "BGM fade-out 1.5초 꼬리",
+      "중간 지점 (15초) 프레임 확인",
+      "ffprobe duration ±0.5s 일치"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "60s-release-highlight",
+    "prompt": "kuniv 리뉴얼 프로젝트 Phase 1-2 완료 하이라이트 60초 영상",
+    "expected": "Stage duration=60, 6-8 scene (오프닝 + workers 7종 소개 + 시그v3 + 모달 + 전환 + 엔딩), 각 scene 7-10초, scene 간 crossfade + 포커스 whoosh SFX, BGM tech + climax 구간에서 음량 약간 상승, anticipation easing 으로 주요 reveal 준비, 파일 크기 < 15MB",
+    "tests": [
+      "scene 전환마다 whoosh SFX (-1~2 frame preload)",
+      "Logo reveal 동프레임 impact SFX",
+      "BGM 입 0.3s fade-in + 출 1.5s fade-out",
+      "60fps minterpolate 파생 선택 가능",
+      "GIF 파생 선택 가능 (2-pass palette < 8MB)",
+      "수동 5차원 critique >= 8점"
+    ]
+  }
+]

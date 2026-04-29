@@ -100,6 +100,20 @@ codex features enable image_generation
 - §6 스타일 DNA 중 가장 가까운 것 명시
 - §7 기본 제외 패턴 + 용도별 특수 제외 삽입
 
+**병행 참조 (2026-04-29 추가 · 모듈형 카메라/렌즈/그레이딩/라이팅 셋)**: `${SKILL_DIR}/references/photography-presets.md` 를 Read 하여 사용한다. 카메라·렌즈·필름/그레이딩·라이팅을 단일 셋으로 박지 말고 **각각 따로 선택·조합**한다.
+
+1. §1 카메라 6셋 (CAM-01~06) · §2 렌즈 6셋 (LENS-01~06) · §3 필름·그레이딩 6셋 (GRADE-01~06) · §4 라이팅 6셋 (LIGHT-01~06) · §5 보조 모듈 (AUX) 검토
+2. **§7 결정 트리** 따라 자동 선택 (디렉터의 두뇌 — 매 컷마다 직접 판단):
+   - **Step A**: 사용자 요청에서 무드 키워드 추출 → 1차 4셋 후보 매핑 (시네마틱→CAM-01/05+LENS-01+GRADE-01+LIGHT-01, 광고→CAM-02+LENS-02+GRADE-04+LIGHT-04, 다큐→CAM-03+LENS-03+GRADE-05+LIGHT-03 ...)
+   - **Step B**: 화면비/구도 일관성 검사 (2.39:1 → 반드시 LENS-01, 4:5 화보 → LENS-02 권장 등)
+   - **Step C**: cross-blend 의도적 부조화 1개 정도 검토 (예: Alexa 디지털 + Helios 빈티지 글래스 = 모던하지만 회화적). 단순 충돌은 금지, 의도 명시 필수
+   - **Step D**: AUX 보조 모듈 1-3개 선택 (시네마틱이면 PROMIST + GRAIN + SPLIT-TONE, 광고면 NEGFILL 만 등)
+   - **Step E**: 프롬프트 §1 또는 JSON Args 헤더에 **선택된 셋 ID + cross-blend 의도** 명시 (예: `selected_sets: CAM-01 + LENS-01 + GRADE-01 + LIGHT-01 / aux: PROMIST, ANAMORPHIC-FLARE, GRAIN / cross_blend: none`). 후속 refine 요청 시 어떤 셋을 바꿀지 빠르게 판단 가능
+3. §6 호환·금기 매트릭스 위반 시엔 의도 명시 (의도 없으면 다른 조합 재선택)
+4. §8 사용자 명시 override 우선 (사용자가 "Hasselblad 로", "Helios 빈티지 보케", "필름 그레인 빼줘" 지정 시 결정 트리 무시)
+5. **광학 일관성 강제 자기검증**: 카메라 + 렌즈 + 그레이딩 + 라이팅이 **하나의 촬영 현장에서 가능한 조합**인지 자기검증. 예: anamorphic scope 비율인데 normal sphere 렌즈 박혀있으면 즉시 교체. 필름 카메라(CAM-05)에 디지털 LUT(GRADE-04) 박는 건 cross-blend 의도 명시해야 OK
+6. **단일 셋 박는 패턴 금지** — 매 컷마다 결정 트리를 거쳐 새로 선택한다. 같은 무드라도 cross-blend 옵션이 다를 수 있어 결과가 다양해진다
+
 내면화 후:
 1. Normalization JSON 내부적으로 작성 (노출하지 않음)
 2. 선택된 모드의 Output Template 을 200~500 단어 영문 프롬프트로 작성
@@ -220,6 +234,7 @@ bash "$HOME/.claude/skills/comad-image/scripts/imagen.sh" \
 - `references/clarification-matrix.md` — 모드별 의도 파악 질문 매트릭스 (137줄)
 - `references/keyword-mapping.md` — 비율·퀄리티 키워드 자동 매핑 + 자연어 힌트 변환표 (86줄)
 - `references/prompt-patterns.md` — **GPT-Image 2.0 한국 실무 패턴** (8-슬롯 구조 · GPT/Codex 2 스타일 · 용도별 11-필드 템플릿 · 한국 감성 키워드 사전 · 6 스타일 DNA) — 2026-04-25 추가, image-prompt-ref 1487 prompts + OpenAI 공식 가이드 기반
+- `references/photography-presets.md` — **모듈형 사진 프리셋 카탈로그** (카메라 6셋 · 렌즈 6셋 · 필름/그레이딩 6셋 · 라이팅 6셋 · AUX 보조 모듈 · 호환 매트릭스 · 자동 선택 결정 트리) — 2026-04-29 추가, photo_prompts_master_reference.md 16 파트 전공자급 키워드 사전 기반. 단일 셋 박지 말고 매 컷마다 셋 조합을 직접 결정
 
 ## Scripts
 
